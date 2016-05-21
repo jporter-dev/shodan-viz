@@ -1,1 +1,17 @@
-h1 asdf
+
+  div v-if="results"
+    span Searching for: {{query}}
+    br
+    span Total results: {{results.total}}
+  div.row
+    div.col-lg-7
+      | TODO: make graphs and shit
+    div.col-lg-5
+      div#results
+        div.result v-for="result in results.matches"
+          div v-if="result.ip_str" {{result.ip_str}}
+          div v-if="result.hostnames" {{result.hostnames}}
+          div v-if="result.title" {{result.title}}
+          div v-if="result.timestamp" {{result.timestamp}}
+          div v-if="result.domains" {{result.domains}}
+          hr

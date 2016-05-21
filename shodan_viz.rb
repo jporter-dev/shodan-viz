@@ -13,9 +13,11 @@ class ShodanViz < Sinatra::Base
     # Todo: parse query to determine whether to use host or query endpoint
 
     begin
-      my_ip = `curl http://ipecho.net/plain`
+      my_ip = `curl http://ipecho.net/plain` #get current external IP
       # shodan_result = shodan_api.host params['query']
-      shodan_result = shodan_api.host '95.241.73.26'
+      # shodan_result = shodan_api.search params['query'], facets: 'country:50,timestamp_day:50'
+      f = File.read 'shodan_sample_search.json'
+      shodan_result = JSON.parse f
     rescue
       # handle no results or timeouts
       shodan_result = Hash.new

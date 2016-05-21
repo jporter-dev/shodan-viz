@@ -1,9 +1,46 @@
 doctype html
 html
   head
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+
     title Shodan Visualizer
 
-    script src="../js/vue.js"
+    link rel="stylesheet" href="../css/app.css"
+    link rel="stylesheet" href="../css/bootstrap.min.css"
 
-  body
+    script src="../js/jquery.js"
+    script src="../js/bootstrap.min.js"
+    script src="../js/vue.js"
+    script src="../js/app.js"
+    script src="http://code.highcharts.com/maps/highmaps.js"
+
+
+  body#shodan-viz
+    nav.navbar.navbar-default
+      div.container-fluid
+        div.navbar-header
+          div.navbar-header
+            a.navbar-brand Shodan Viz
+        form.navbar-form.navbar-left v-on:submit.prevent="search"
+          div.form-group
+            input.form-control type="text" placeholder="Search" v-model="query"
+          button.btn.btn-default type="Submit" Submit
+
     == yield
+    javascript:
+      var vm = new Vue({
+        el: "#shodan-viz",
+        data: {
+          query: "",
+          results: false
+        },
+        methods: {
+          search: function (event) {
+            var self = this;
+            $.get("/search/"+self.query, function (data) {
+              self.results = data;
+            })
+          }
+        }
+      })
