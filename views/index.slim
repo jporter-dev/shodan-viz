@@ -3,15 +3,34 @@
     span Searching for: {{query}}
     br
     span Total results: {{results.total}}
-  div.row
-    div.col-lg-7
-      | TODO: make graphs and shit
-    div.col-lg-5
-      div#results
-        div.result v-for="result in results.matches"
-          div v-if="result.ip_str" {{result.ip_str}}
-          div v-if="result.hostnames" {{result.hostnames}}
-          div v-if="result.title" {{result.title}}
-          div v-if="result.timestamp" {{result.timestamp}}
-          div v-if="result.domains" {{result.domains}}
-          hr
+    div.row
+      div.col-lg-7
+        div.row
+          div.col-lg-12
+            div.panel.panel-default
+              div.panel-body
+                div#map
+                  | Map goes here
+        div.row
+          div.col-lg-6
+            div.panel.panel-default
+              div.panel-body
+                | graf goes here
+          div.col-lg-6
+            div.panel.panel-default
+              div.panel-body
+                | graf goes here
+        div.row
+          div.col-lg-12
+            div.panel.panel-default
+              div.panel-body
+                | Timeline goes here
+      div.col-lg-5
+        div#results
+          div.result v-for="result in results.matches"
+            div v-if="result.ip_str" {{result.ip_str}}
+            div v-if="result.hostnames" {{result.hostnames}}
+            div v-if="result.title" {{result.title}}
+            div v-if="result.timestamp" {{result.timestamp}}
+            div v-if="result.domains" {{result.domains}}
+            hr

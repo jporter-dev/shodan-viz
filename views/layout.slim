@@ -11,9 +11,10 @@ html
 
     script src="../js/jquery.js"
     script src="../js/bootstrap.min.js"
+    script src="../js/d3.min.js"
     script src="../js/vue.js"
-    script src="../js/app.js"
     script src="http://code.highcharts.com/maps/highmaps.js"
+    script src="../js/app.js"
 
 
   body#shodan-viz
@@ -27,12 +28,13 @@ html
             input.form-control type="text" placeholder="Search" v-model="query"
           button.btn.btn-default type="Submit" Submit
 
-    == yield
+    div.container-fluid
+      == yield
     javascript:
       var vm = new Vue({
         el: "#shodan-viz",
         data: {
-          query: "",
+          query: '',
           results: false
         },
         methods: {
