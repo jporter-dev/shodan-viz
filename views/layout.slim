@@ -13,7 +13,11 @@ html
     script src="../js/bootstrap.min.js"
     script src="../js/d3.min.js"
     script src="../js/vue.js"
-    script src="http://code.highcharts.com/maps/highmaps.js"
+
+    script src="http://code.highcharts.com/highcharts.js"
+    script src="http://code.highcharts.com/maps/modules/map.js"
+    script src="http://code.highcharts.com/mapdata/custom/world.js"
+
     script src="../js/app.js"
 
 
@@ -30,12 +34,19 @@ html
 
     div.container-fluid
       == yield
+
     javascript:
       var vm = new Vue({
         el: "#shodan-viz",
         data: {
           query: '',
           results: false
+        },
+        ready: function() {
+          this.$watch("results", function(val){
+            console.log(this.results)
+            initGraphs(this.results)
+          })
         },
         methods: {
           search: function (event) {

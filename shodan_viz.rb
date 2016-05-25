@@ -15,8 +15,8 @@ class ShodanViz < Sinatra::Base
     begin
       my_ip = `curl http://ipecho.net/plain` #get current external IP
       # shodan_result = shodan_api.host params['query']
-      # shodan_result = shodan_api.search params['query'], facets: 'country:50,timestamp_day:50'
-      f = File.read 'shodan_sample_search.json'
+      # shodan_result = shodan_api.search params['query'], facets: 'country:25,timestamp_day:10,device:5,org:25,os:5,port:10'
+      f = File.read 'shodan_sample_search_facet.json'
       shodan_result = JSON.parse f
     rescue
       # handle no results or timeouts

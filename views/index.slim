@@ -9,28 +9,43 @@
           div.col-lg-12
             div.panel.panel-default
               div.panel-body
-                div#map
-                  | Map goes here
+                div#map.d3-chart
+                  | Loading...
         div.row
-          div.col-lg-6
+          div.col-sm-6
             div.panel.panel-default
               div.panel-body
-                | graf goes here
-          div.col-lg-6
+                div#orgs.d3-chart
+                  | Loading...
+          div.col-sm-6
             div.panel.panel-default
               div.panel-body
-                | graf goes here
+                div#opsys.d3-chart
+                  | Loading...
         div.row
           div.col-lg-12
             div.panel.panel-default
               div.panel-body
-                | Timeline goes here
+                div#timeline
+                  | Loading...
       div.col-lg-5
-        div#results
-          div.result v-for="result in results.matches"
-            div v-if="result.ip_str" {{result.ip_str}}
+        div#results.list-group
+          div.result.list-group-item v-for="result in results.matches"
+            div v-if="result.ip_str"
+              h3
+                | {{result.ip_str}}
             div v-if="result.hostnames" {{result.hostnames}}
             div v-if="result.title" {{result.title}}
             div v-if="result.timestamp" {{result.timestamp}}
+            div v-if="result.timestamp"
+            div v-if="result.location"
+              span
+                | {{result.location.country_name}}
+              span v-if="result.location.city"
+                | , {{result.location.city}}
             div v-if="result.domains" {{result.domains}}
-            hr
+            div v-if="result.org" {{result.org}}
+            div v-if="result.os" {{result.os}}
+            div v-if="result.asn" {{result.asn}}
+            div v-if="result.port" {{result.port}}
+            div v-if="result.port" asdf
