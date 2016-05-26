@@ -39,8 +39,10 @@ div v-if="results !== null && results !== false" id="content-wrapper"
       div#results.list-group
         div.result.list-group-item v-for="result in results.matches"
           div v-if="result.ip_str"
-            h3
+            h4
               | {{result.ip_str}}
+              span.text-muted v-if="result.port"
+                | :{{result.port}}
           div v-if="result.hostnames" {{result.hostnames}}
           div v-if="result.title" {{result.title}}
           div v-if="result.timestamp" {{result.timestamp}}
@@ -54,10 +56,10 @@ div v-if="results !== null && results !== false" id="content-wrapper"
           div v-if="result.org" {{result.org}}
           div v-if="result.os" {{result.os}}
           div v-if="result.asn" {{result.asn}}
-          div v-if="result.port" {{result.port}}
-          div v-if="result.port" asdf
+          div v-if="result.port"
 div v-if="results === false"
-  h3
-    b
-      | No results found.
-    | Please try a different query.
+  center
+    h3
+      b
+        | No results found
+      small   Please try a different query
