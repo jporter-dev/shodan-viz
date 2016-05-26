@@ -22,6 +22,7 @@ class ShodanViz < Sinatra::Base
       # handle no results or timeouts
       shodan_result = Hash.new
     end
+    shodan_result = false
 
     content_type :json
     shodan_result.to_json

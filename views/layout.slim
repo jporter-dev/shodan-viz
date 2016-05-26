@@ -22,15 +22,11 @@ html
 
 
   body#shodan-viz
-    nav.navbar.navbar-default
+    nav.navbar
       div.container-fluid
-        div.navbar-header
-          div.navbar-header
-            a.navbar-brand Shodan Viz
-        form.navbar-form.navbar-left v-on:submit.prevent="search"
-          div.form-group
-            input.form-control type="text" placeholder="Search" v-model="query"
-          button.btn.btn-default type="Submit" Submit
+        div.search-form
+          form v-on:submit.prevent="search"
+            input.form-control type="text" placeholder="Search..." v-model="query" required="required"
 
     div.container-fluid
       == yield
@@ -40,19 +36,19 @@ html
         el: "#shodan-viz",
         data: {
           query: '',
-          results: false
+          results: null
         },
         ready: function() {
           this.$watch("results", function(val){
-            console.log(this.results)
-            initGraphs(this.results)
+            if(this.results)
+              initGraphs(this.results)
           })
         },
         methods: {
           search: function (event) {
-            var self = this;
-            $.get("/search/"+self.query, function (data) {
-              self.results = data;
+            var _this = this;
+            $.get("/search/"+_this.query, function (data) {
+              _this.results = data;
             })
           }
         }

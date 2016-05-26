@@ -1,3 +1,35 @@
+#shodan-viz .search-form {
+  padding: 10px 0;
+}
+
+#shodan-viz .search-form input[type=text] {
+  background:transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+  padding: 0;
+}
+
+#shodan-viz .search-form input[type=text]:focus {
+  border-color: #28568C;
+  border-width: 2px;
+}
+
+#content-wrapper .panel-heading {
+  border-color: #28568C;
+  border-width: 2px;
+  background-color: transparent;
+  font-weight: 300;
+  font-size: 22px;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.panel-body {
+  background-color: #f3f5f6;
+}
+
 .d3-chart {
   position: relative;
 }
@@ -8,11 +40,20 @@
   top: 40%;
   left: 30%;
   width: 40%;
-  padding: 15px 5px;
+  padding: 10px 5px;
   z-index: 10;
   text-align: center;
   box-shadow: 0 0 5px #999;
   color: #333;
   background: #eee;
-
 }
+
+/*bar chart*/
+.axis { font: 10px sans-serif; }
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path { display: none; }

@@ -15,8 +15,72 @@ var graphs = {
 
   opsys: function(results){
     var container = $('#opsys'),
+      margin = {top: 20, right: 20, bottom: 60, left: 50}
       w = h = r = container.outerWidth();
-    container.height(h)
+    container.height(h).html('');
+    w = w - margin.left - margin.right;
+    h = h - margin.top - margin.bottom;
+
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, w], .1),
+      y = d3.scale.linear()
+        .range([h, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(10);
+
+    var svg = d3.select("#opsys").append("svg")
+        .attr("width", w + margin.left + margin.right)
+        .attr("height", h + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var data = results.facets.os,
+      color = ["#28568C", "#BDC9E2"]
+    color = d3.scale.linear().range(color).domain([0, Object.keys(data).length-1]);
+
+    x.domain(data.map(function(d) { return d.value; }));
+    y.domain([0, d3.max(data, function(d) { return d.count; })]);
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + h + ")")
+        .call(xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(-45)")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", "-.15em")
+
+
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -30)
+        .attr("dx", '-35%')
+        .style("text-anchor", "end")
+        .text("Frequency");
+
+    svg.selectAll(".bar")
+        .data(data)
+      .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return x(d.value); })
+        .attr("width", x.rangeBand())
+        .attr("y", function(d) { return y(d.count); })
+        .attr("height", function(d) { return h - y(d.count); })
+        .attr("fill", function(d,i) {
+          return color(i);
+        });
   },
 
   orgs: function(results){
@@ -27,10 +91,19 @@ var graphs = {
     container.height(h).html('');
 
     // set the donut width, legend settings, and colors
-    var dw = 75,
+    var dw = 40,
       legendSize = 18,
-      legendSpace = 4,
-      color = d3.scale.category20b();
+      legendSpace = 4;
+
+    // update facet to include other
+    var data = results.facets.org;
+    data.push({
+      'value': "Other",
+      'count': results.total - data.map(function(obj) { return obj.count; }).reduce(function(tot, obj) { return tot+obj; })
+    });
+
+    var color = ["#28568C", "#EEEEEE"]
+    color = d3.scale.linear().range(color).domain([0, Object.keys(data).length-1]);
 
     // init the svg
     var svg = d3.select('#orgs')
@@ -54,12 +127,6 @@ var graphs = {
     tooltip.append('div').attr('class', 'd3-label');
     tooltip.append('div').attr('class', 'count');
 
-    // update facet to include other
-    var data = results.facets.org;
-    data.push({
-      'value': "Other",
-      'count': results.total - data.map(function(obj) { return obj.count; }).reduce(function(tot, obj) { return tot+obj; })
-    });
 
     // draw the pie pieces
     var path = svg.selectAll('path')
@@ -67,13 +134,24 @@ var graphs = {
       .enter()
       .append('path')
       .attr('d', arc)
+      .attr('stroke', '#fff')
+      .attr('stroke-width', '3px')
       .attr('fill', function(d,i) {
         if(d.data.value === 'Other'){
-          return '#ccc';
+          return '#ddd';
         } else {
-          return color(d.data.value);
+          return color(i);
         }
-      });
+      })
+
+      path.transition().delay(function(d, i) { return i * 5; }).duration(500)
+        .attrTween('d', function(d) {
+           var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
+           return function(t) {
+               d.endAngle = i(t);
+             return arc(d);
+           }
+        });
 
     path.on('mouseover', function(d) {
       var pct = Math.round(1000*d.data.count/results.total);
@@ -90,6 +168,9 @@ var graphs = {
   map: function(results) {
     $('#map').highcharts('Map', {
       title: false,
+      chart: {
+        backgroundColor: null
+      },
 
       legend: {
         title: {
@@ -121,6 +202,7 @@ var graphs = {
         mapData: Highcharts.maps['custom/world'],
         joinBy: ['hc-key', 'name'],
         name: 'Countries',
+        nullColor: '#fff',
         states: {
           hover: {
             color: "#B72712"
