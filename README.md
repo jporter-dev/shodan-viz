@@ -9,3 +9,9 @@ Modern web UI for Shodan.io, a search engine for internet-connected devices. Bui
 1. Run `$ bundle install`
 2. Run `$ rackup`
 3. Navigate to [http://localhost:9292](http://localhost:9292) in a modern browser
+4. Enter a query. Examples:
+  * webcam
+  * elasticsearch
+  * comcast
+  * "china telecom"
+  * "default password"
