@@ -6,48 +6,46 @@ function initGraphs(results){
 }
 
 var graphs = {
-  timeline: function(results) {
-    var container = $('#timeline'),
-      w = container.outerWidth(),
-      h = w*(9/16);
-    container.height(h)
-  },
-
   opsys: function(results){
     var container = $('#opsys'),
       margin = {top: 20, right: 20, bottom: 60, left: 50}
       w = h = r = container.outerWidth();
     container.height(h).html('');
+
+    // add margins for axes
     w = w - margin.left - margin.right;
     h = h - margin.top - margin.bottom;
 
+    // set up the x and y axis
     var x = d3.scale.ordinal()
         .rangeRoundBands([0, w], .1),
       y = d3.scale.linear()
         .range([h, 0]);
-
     var xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom");
-
     var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
         .ticks(10);
 
+    // init graph
     var svg = d3.select("#opsys").append("svg")
         .attr("width", w + margin.left + margin.right)
         .attr("height", h + margin.top + margin.bottom)
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    // fetch data and colors
     var data = results.facets.os,
       color = ["#28568C", "#BDC9E2"]
     color = d3.scale.linear().range(color).domain([0, Object.keys(data).length-1]);
 
+    // set the values of the graph
     x.domain(data.map(function(d) { return d.value; }));
     y.domain([0, d3.max(data, function(d) { return d.count; })]);
 
+    // draw the x axis
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + h + ")")
@@ -58,8 +56,7 @@ var graphs = {
         .attr("dx", "-.8em")
         .attr("dy", "-.15em")
 
-
-
+    // draw the y axis
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis)
@@ -70,6 +67,7 @@ var graphs = {
         .style("text-anchor", "end")
         .text("Frequency");
 
+    // draw the bars
     svg.selectAll(".bar")
         .data(data)
       .enter().append("rect")
@@ -102,6 +100,7 @@ var graphs = {
       'count': results.total - data.map(function(obj) { return obj.count; }).reduce(function(tot, obj) { return tot+obj; })
     });
 
+    // set the linear color range
     var color = ["#28568C", "#EEEEEE"]
     color = d3.scale.linear().range(color).domain([0, Object.keys(data).length-1]);
 
@@ -144,6 +143,7 @@ var graphs = {
         }
       })
 
+      // animate the pie
       path.transition().delay(function(d, i) { return i * 5; }).duration(500)
         .attrTween('d', function(d) {
            var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
@@ -153,6 +153,7 @@ var graphs = {
            }
         });
 
+    // tooltip population and reset
     path.on('mouseover', function(d) {
       var pct = Math.round(1000*d.data.count/results.total);
       tooltip.select('.d3-label').html(d.data.value);

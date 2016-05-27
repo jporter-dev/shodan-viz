@@ -1,7 +1,7 @@
 
 div v-if="results !== null && results !== false" id="content-wrapper"
   div.row
-    div.col-lg-7
+    div.col-lg-6
       div.row
         div.col-lg-12
           div.panel-heading
@@ -25,38 +25,47 @@ div v-if="results !== null && results !== false" id="content-wrapper"
             div.panel-body
               div#opsys.d3-chart
                 | Loading...
-      div.row
-        div.col-lg-12
-          div.panel-body
-            div#timeline
-          div.panel.panel-default
-                | Loading...
-    div.col-lg-5
+    div.col-lg-6
       div.panel-heading
             | Total results:&nbsp;
             span.text-muted
               | {{results.total}}
       div#results.list-group
         div.result.list-group-item v-for="result in results.matches"
-          div v-if="result.ip_str"
-            h4
-              | {{result.ip_str}}
-              span.text-muted v-if="result.port"
-                | :{{result.port}}
-          div v-if="result.hostnames" {{result.hostnames}}
-          div v-if="result.title" {{result.title}}
-          div v-if="result.timestamp" {{result.timestamp}}
-          div v-if="result.timestamp"
-          div v-if="result.location"
-            span
-              | {{result.location.country_name}}
-            span v-if="result.location.city"
-              | , {{result.location.city}}
-          div v-if="result.domains" {{result.domains}}
-          div v-if="result.org" {{result.org}}
-          div v-if="result.os" {{result.os}}
-          div v-if="result.asn" {{result.asn}}
-          div v-if="result.port"
+          div.row
+            div.col-sm-5
+              div v-if="result.ip_str"
+                h4
+                  | {{result.ip_str}}
+                  span.text-muted v-if="result.port"
+                    | :{{result.port}}
+              div v-if="result.title"
+                h5
+                  | {{result.title}}
+              div.text-muted v-if="result.hostnames" {{result.hostnames}}
+              div v-if="result.isp"
+                b
+                  | {{result.isp}}
+                span.text-muted v-if="result.domains"
+                  |  {{result.domains}}
+              div v-if="result.timestamp" Added on {{result.timestamp}}
+              div v-if="result.location"
+                span v-if="result.location.city"
+                  | {{result.location.city}}
+                span v-if="result.location.region_code && result.location.country_code === 'US'"
+                  | , {{result.location.region_code}},
+                span
+                  |  {{result.location.country_name}}
+
+              div v-if="result.os"
+                b OS:
+                |  {{result.os}}
+              div v-if="result.asn"
+                b ASN:
+                |  {{result.asn}}
+            div.col-sm-7
+              pre.banner
+                | {{result.data}}
 div v-if="results === false"
   center
     h3

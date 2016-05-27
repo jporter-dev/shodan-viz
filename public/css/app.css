@@ -1,7 +1,10 @@
+/*
+* Header search form
+*/
+
 #shodan-viz .search-form {
   padding: 10px 0;
 }
-
 #shodan-viz .search-form input[type=text] {
   background:transparent;
   box-shadow: none;
@@ -11,7 +14,6 @@
   font-size: 16px;
   padding: 0;
 }
-
 #shodan-viz .search-form input[type=text]:focus {
   border-color: #28568C;
   border-width: 2px;
@@ -26,9 +28,22 @@
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
+/*
+*  Generics
+*/
 .panel-body {
   background-color: #f3f5f6;
 }
+
+pre.banner {
+  background-color: transparent;
+  border: none;
+  color: #666;
+}
+
+/*
+*   Graphs
+*/
 
 .d3-chart {
   position: relative;
