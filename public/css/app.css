@@ -39,6 +39,7 @@ pre.banner {
   background-color: transparent;
   border: none;
   color: #666;
+  max-height: 200px;
 }
 
 /*
