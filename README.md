@@ -6,11 +6,12 @@ Modern web UI for Shodan.io, a search engine for internet-connected devices. Bui
 * [Bundler](http://bundler.io/)
 
 ## Installation
-1. Run `$ bundle install`
+1. `$ git clone https://github.com/joshporter1/shodan-viz.git`
+2. `$ cd shodan-viz && bundle install`
   * _Optional_: Use your own [API key](https://account.shodan.io/register) in `config/initializers.yml`
-2. Run `$ rackup`
-3. Navigate to [http://localhost:9292](http://localhost:9292) in a modern browser
-4. Enter a query. Examples:
+3. Run `$ rackup`
+4. Navigate to [http://localhost:9292](http://localhost:9292) in a modern browser
+5. Enter a query. Examples:
   * Server: SQ-WEBCAM
   * elasticsearch
   * netgear
