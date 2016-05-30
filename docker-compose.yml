@@ -1,0 +1,6 @@
+www:
+  build: .
+  volumes:
+    - .:/src
+  ports:
+    - 80:9292
