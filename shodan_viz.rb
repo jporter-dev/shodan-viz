@@ -15,9 +15,12 @@ class ShodanViz < Sinatra::Base
     begin
       my_ip = `curl http://ipecho.net/plain` #get current external IP
       shodan_result = shodan_api.search params['query'], facets: 'country:25,org:15,os:5'
-    rescue
+    rescue Exception => e
       # handle no results or timeouts
-      shodan_result = false
+      puts "Error: #{e.to_s}"
+      shodan_result = {
+        'error': e.to_s
+      }
     end
 
     content_type :json

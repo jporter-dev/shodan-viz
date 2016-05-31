@@ -1,7 +1,9 @@
 function initGraphs(results){
   // build the graphs
-  for(var i in graphs) {
-    graphs[i](results);
+  if(!results.error && results.total > 0){
+    for(var i in graphs) {
+      graphs[i](results);
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 
-div v-if="results !== null && results !== false" id="content-wrapper"
+div v-if="!results.error && results.total > 0" id="content-wrapper"
   div.row
     div.col-lg-5
       div.row
@@ -66,9 +66,17 @@ div v-if="results !== null && results !== false" id="content-wrapper"
             div.col-sm-7
               pre.banner
                 | {{result.data}}
-div v-if="results === false"
+div v-if="results.total === 0 && !results.error"
   center
     h3
       b
         | No results found
       small   Please try a different query
+div v-if="results.error"
+  center
+    h3
+      b
+        | Error
+      small
+        |  {{results.error}}
+
