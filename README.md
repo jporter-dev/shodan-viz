@@ -1,6 +1,9 @@
 # shodan-viz
 Modern web UI for [Shodan.io](https://www.shodan.io/), a search engine for internet-connected devices. Built with d3.js, Highcharts, and Vue.js.
 
+* [Installation](#installation)
+* [Querying](#querying)
+
 ## Dependencies
 * [Ruby 2.2 or higher](https://www.ruby-lang.org/en/documentation/installation/)
 * [Bundler](http://bundler.io/)
