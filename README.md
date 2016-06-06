@@ -4,6 +4,8 @@ Modern web UI for [Shodan.io](https://www.shodan.io/), a search engine for inter
 * [Installation](#installation)
 * [Querying](#querying)
 
+![Demo Screenshot](ss.png)
+
 ## Dependencies
 * [Ruby 2.2 or higher](https://www.ruby-lang.org/en/documentation/installation/)
 * [Bundler](http://bundler.io/)
@@ -42,3 +44,4 @@ Example filtered queries:
 
 
 _Note: the included API key does not support filtering._
+
