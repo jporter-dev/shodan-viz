@@ -62,12 +62,6 @@ var graphs = {
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis)
-      .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -30)
-        .attr("dx", '-35%')
-        .style("text-anchor", "end")
-        .text("Frequency");
 
     // draw the bars
     svg.selectAll(".bar")
